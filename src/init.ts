@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
-import { ChainId } from "./types";
 import { supportedNetworks } from "./consts";
+import { ChainId } from "./types";
 
 let provider: ethers.providers.JsonRpcProvider | undefined;
 
