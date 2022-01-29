@@ -1,8 +1,3 @@
+import { subscriptionDetails, isSubscribedToPackage } from "./details";
 
-
-import {subscriptionDetails, isSubscribedToPackage} from "./details"
-
-export {
-    subscriptionDetails,
-    isSubscribedToPackage
-}
+export { subscriptionDetails, isSubscribedToPackage };

@@ -1,1 +1,1 @@
-# Diagonal SDK  (WIP)
+# Diagonal SDK (WIP)

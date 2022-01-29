@@ -1,12 +1,17 @@
-import {
-    subscriptionDetails,
-    isSubscribedToPackage
-} from "./subscriptions"
+import { subscriptionDetails, isSubscribedToPackage } from "./subscriptions";
 
-import {init} from "./init"
+import { init, getProvider } from "./init";
+
+import { networks, supportedNetworks } from "./consts";
+
+import { SubscriptionDetails } from "./types";
 
 export {
     init,
+    getProvider,
     subscriptionDetails,
-    isSubscribedToPackage
-}
+    isSubscribedToPackage,
+    networks,
+    supportedNetworks,
+    SubscriptionDetails,
+};
