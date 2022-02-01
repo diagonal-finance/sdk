@@ -8,7 +8,7 @@
         "sourceMap": true,
         "declarationDir": "types",
         "outDir": "dist/main",
-        "rootDir": "./src",
+        "rootDir": "./",
         "removeComments": false,
         "strict": true,
         "noImplicitAny": true,
@@ -31,10 +31,10 @@
     },
     "ts-node": {
         "compilerOptions": {
-          "target": "esnext",
-          "module": "commonjs"
+            "target": "esnext",
+            "module": "commonjs"
         }
-      },
-    "include": ["src"],
+    },
+    "include": ["src", "tests", "rollup.config.ts", "jest.config.ts"],
     "exclude": ["node_modules", "browser_test"]
 }

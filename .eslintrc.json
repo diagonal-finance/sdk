@@ -2,13 +2,15 @@
     "root": false,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
         "project": "./tsconfig.json"
     },
     "env": {
         "es6": true
     },
     "ignorePatterns": ["node_modules", "build", "coverage"],
-    "plugins": ["import", "eslint-comments"],
+    "plugins": ["import", "eslint-comments", "jest"],
     "extends": [
         "eslint:recommended",
         "plugin:eslint-comments/recommended",

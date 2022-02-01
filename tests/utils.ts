@@ -1,4 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
+
 import { networks, SubscriptionDetails } from "../src";
 
 export interface TestState {
@@ -14,7 +15,7 @@ export interface TestState {
 }
 
 export const testState: TestState = {
-    network: networks.mumbai,
+    network: networks.mumbai as number,
     networkName: "maticmum",
     rpc: "https://rpc-mumbai.maticvigil.com/",
     userAddress: "0x4Ea66bE6947D711Ed963fc4aa8c04c5a4da6959B",

@@ -1,5 +1,6 @@
 import { ChainId } from "./types";
 
+// Object of common networks
 export const networks: { [x: string]: number } = {
     goerli: 5,
     hardhat: 31337,
@@ -11,4 +12,5 @@ export const networks: { [x: string]: number } = {
     matic: 137,
 };
 
+// Array of supported networks
 export const supportedNetworks: ChainId[] = [networks.mumbai as number];
