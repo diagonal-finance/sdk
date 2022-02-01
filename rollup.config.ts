@@ -23,7 +23,13 @@ export default {
             sourcemap: true,
         },
         { file: pkg.exports.import, format: "es", banner, sourcemap: true },
+        { file: pkg.exports.browser, format: "iife", banner, name: 'DiagonalSDK', sourcemap: true, globals: {
+            'ethers': 'ethers'
+        }},
     ],
     external: Object.keys(pkg.dependencies),
-    plugins: [typescript({ tsconfig: "./tsconfig.json" }), json()],
+    plugins: [
+        typescript({ tsconfig: "./tsconfig.json" }), 
+        json()
+    ],
 };

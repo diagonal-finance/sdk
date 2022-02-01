@@ -1,16 +1,13 @@
-import { subscriptionDetails, isSubscribedToPackage } from "./subscriptions";
-
-import { init, getProvider } from "./init";
-
 import { networks, supportedNetworks } from "./consts";
+
+import Diagonal from "./diagonal";
+import Subscription from "./subscription";
 
 import { SubscriptionDetails } from "./types";
 
 export {
-    init,
-    getProvider,
-    subscriptionDetails,
-    isSubscribedToPackage,
+    Diagonal,
+    Subscription,
     networks,
     supportedNetworks,
     SubscriptionDetails,
