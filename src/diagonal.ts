@@ -1,12 +1,14 @@
 import { ethers } from "ethers";
 
-import { Subscription, supportedNetworks } from ".";
+import Subscription from "./Subscription";
+import { supportedNetworks } from "./consts";
+import { IDiagonal, ISubscription } from "./interfaces";
 
 /**
  * Diagonal is the main class of the SDK. It is the main
  * entry point, and a class that should be used to initialize the SDK.
  */
-export default class Diagonal {
+export default class Diagonal implements IDiagonal {
     // The `JsonRpcProvider` provider
     private _provider: ethers.providers.JsonRpcProvider;
 
@@ -30,7 +32,7 @@ export default class Diagonal {
     }
 
     /**
-     * Create and return a Subscription object based on the 
+     * Create and return a Subscription object based on the
      * supplied arguments
      * @param userAddress The user address
      * @param serviceAddress The service address
@@ -41,7 +43,7 @@ export default class Diagonal {
         userAddress: string,
         serviceAddress: string,
         superTokenAddress: string
-    ): Subscription {
+    ): ISubscription {
         return new Subscription(
             this,
             userAddress,

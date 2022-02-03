@@ -1,6 +1,6 @@
+import Diagonal from "./Diagonal";
+import Subscription from "./Subscription";
 import { networks, supportedNetworks } from "./consts";
-import Diagonal from "./diagonal";
-import Subscription from "./subscription";
 import { ChainId, SubscriptionDetails } from "./types";
 
 export {

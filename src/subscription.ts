@@ -1,5 +1,5 @@
 import { DiagonalServiceV1 } from "./artifacts/typechain/DiagonalServiceV1";
-import Diagonal from "./diagonal";
+import { IDiagonal, ISubscription } from "./interfaces";
 import { getDiagonalServiceContract } from "./utils";
 
 import { SubscriptionDetails } from ".";
@@ -9,7 +9,7 @@ import { SubscriptionDetails } from ".";
  * for interaction with Subscription entities. It should be used for
  * all of the subscription related operations.
  */
-export default class Subscription {
+export default class Subscription implements ISubscription {
     // The address of the user
     private _userAddress: string;
     // The address of the service
@@ -17,7 +17,7 @@ export default class Subscription {
     // The SuperToken address
     private _superTokenAddress: string;
     // Instance of the Diagonal class
-    private _diagonal: Diagonal;
+    private _diagonal: IDiagonal;
 
     /**
      * Instantiate a Subscription object based on the supplied arguments
@@ -27,7 +27,7 @@ export default class Subscription {
      * @param superTokenAddress The address of the SuperToken for which the subscription is associated with
      */
     constructor(
-        diagonal: Diagonal,
+        diagonal: IDiagonal,
         userAddress: string,
         serviceAddress: string,
         superTokenAddress: string
@@ -43,7 +43,7 @@ export default class Subscription {
      * @returns A SubscriptionDetails object
      */
     public async getDetails(): Promise<SubscriptionDetails> {
-        if (!this._diagonal || !(this._diagonal instanceof Diagonal)) {
+        if (!this._diagonal || !this._diagonal.provider) {
             throw new Error("SDK not initialized.");
         }
 
@@ -112,7 +112,7 @@ export default class Subscription {
     /**
      * Get the diagonal instance
      */
-    public get diagonal(): Diagonal {
+    public get diagonal(): IDiagonal {
         return this._diagonal;
     }
 }
