@@ -33,7 +33,7 @@
             🤝 Code of conduct
         </a>
         <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-        <a href="https://github.com/appliedzkp/zk-kit/issues/new/choose">
+        <a href="https://github.com/diagonal-finance/sdk/issues/new/choose">
             🔎 Issues
         </a>
     </h4>
@@ -45,7 +45,7 @@
 ♛ [Conventional Commits](https://www.conventionalcommits.org) for adding human and machine readable meaning to commit messages (`yarn commit`)\
 ♜ [Jest](https://jestjs.io/) tests & common test coverage for all packages (`yarn test`)\
 ♞ [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) to keep the code neat and well organized (`yarn prettier` & `yarn lint`)\
-♝ Automatic deployment of documentation generated with [typedocs](https://typedoc.org/)\
+♝ Automatic deployment of documentation generated with [typedocs](https://typedoc.org/)
 
 ---
 
@@ -93,7 +93,7 @@
 ### Via NPM:
 
 ```bash
-$ yarn add @diagonal-finance/sdk
+yarn add @diagonal-finance/sdk
 ```
 
 ### Raw Javascript bundle:
@@ -140,17 +140,17 @@ const isValid: boolean = await subscription.validate(packageId);
 Clone this repository and install the dependencies:
 
 ```bash
-$ git clone https://github.com/diagonal-finance/sdk.git
-$ cd sdk && yarn
+git clone https://github.com/diagonal-finance/sdk.git
+cd sdk && yarn
 ```
 
 ### 📜 Usage
 
 ```bash
-$ yarn lint # Syntax check with ESLint (yarn lint:fix to fix errors).
-$ yarn prettier # Syntax check with Prettier (yarn prettier:fix to fix errors).
-$ yarn commit # Interactive Commitizen commit.
-$ yarn test # Run tests (with common coverage).
-$ yarn build # Create a JS build.
-$ yarn publish # Publish a package on npm.
+yarn lint # Syntax check with ESLint (yarn lint:fix to fix errors).
+yarn prettier # Syntax check with Prettier (yarn prettier:fix to fix errors).
+yarn commit # Interactive Commitizen commit.
+yarn test # Run tests (with common coverage).
+yarn build # Create a JS build.
+yarn publish # Publish a package on npm.
 ```
