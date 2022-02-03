@@ -32,8 +32,7 @@
         "prettier:fix": "prettier -w .",
         "test": "jest --coverage",
         "test:watch": "jest --coverage --watch",
-        "docs": "typedoc src/index.ts --out docs/",
-        "commit": "cz"
+        "docs": "typedoc src/index.ts --out docs/"
     },
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx}": [
@@ -53,6 +52,8 @@
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-typescript": "^7.16.7",
+        "@commitlint/cli": "^16.1.0",
+        "@commitlint/config-conventional": "^16.0.0",
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.1.3",
@@ -80,15 +81,6 @@
         "ts-node": "^10.4.0",
         "tslib": "^2.3.1",
         "typedoc": "^0.22.11",
-        "typescript": "^4.5.5",
-        "@commitlint/cli": "^16.1.0",
-        "@commitlint/config-conventional": "^16.0.0",
-        "commitizen": "^4.2.4",
-        "cz-conventional-changelog": "^3.3.0"
-    },
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        }
+        "typescript": "^4.5.5"
     }
 }
