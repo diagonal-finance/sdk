@@ -36,7 +36,6 @@ describe("Diagonal tests", () => {
                 testState.tokenAddress
             );
 
-            expect(subscription.diagonal).toEqual(diagonal);
             expect(subscription.userAddress).toEqual(testState.userAddress);
             expect(subscription.serviceAddress).toEqual(
                 testState.serviceAddress

@@ -62,7 +62,6 @@ describe("Subscription tests", () => {
                 testState.tokenAddress
             );
 
-            expect(subscription.diagonal).toEqual(subscription1.diagonal);
             expect(subscription.userAddress).toEqual(subscription1.userAddress);
             expect(subscription.serviceAddress).toEqual(
                 subscription1.serviceAddress
