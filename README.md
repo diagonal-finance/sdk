@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/diagonal-finance/sdk/blob/main/LICENSE">
+    <a href="https://github.com/diagonal-finance/sdk/blob/master/LICENSE">
         <img alt="Github license" src="https://img.shields.io/github/license/diagonal-finance/sdk.svg?style=flat-square">
     </a>
     <a href="https://github.com/diagonal-finance/sdk/actions?query=workflow%3Atest">
