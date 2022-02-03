@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
 
-import Subscription from "./Subscription";
 import { supportedNetworks } from "./consts";
 import { IDiagonal, ISubscription } from "./interfaces";
+import Subscription from "./subscription";
 
 /**
  * Diagonal is the main class of the SDK. It is the main
