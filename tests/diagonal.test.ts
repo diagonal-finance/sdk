@@ -3,6 +3,7 @@ import { networks, supportedNetworks } from "../src";
 
 import { testState } from "./utils";
 
+// Diagonal class tests
 describe("Diagonal tests", () => {
     describe("Init tests", () => {
         it("Should be initialized correctly when correct parameters are passed", async () => {

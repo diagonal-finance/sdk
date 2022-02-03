@@ -2,6 +2,7 @@ import { Diagonal, Subscription } from "../src";
 
 import { testState } from "./utils";
 
+// Subscription class tests
 describe("Subscription tests", () => {
     describe("Subscription initialization tests", () => {
         it("getDetails should fail if the SDK is not initialized", async () => {
