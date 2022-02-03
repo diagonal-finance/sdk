@@ -42,7 +42,6 @@
 | Diagonal SDK is a collection of classes which enables developers easier interaction with the Diagonal protocol. |
 | --------------------------------------------------------------------------------------------------------------- |
 
-♛ [Conventional Commits](https://www.conventionalcommits.org) for adding human and machine readable meaning to commit messages (`yarn commit`)\
 ♜ [Jest](https://jestjs.io/) tests & common test coverage for all packages (`yarn test`)\
 ♞ [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) to keep the code neat and well organized (`yarn prettier` & `yarn lint`)\
 ♝ Automatic deployment of documentation generated with [typedocs](https://typedoc.org/)
@@ -149,7 +148,6 @@ cd sdk && yarn
 ```bash
 yarn lint # Syntax check with ESLint (yarn lint:fix to fix errors).
 yarn prettier # Syntax check with Prettier (yarn prettier:fix to fix errors).
-yarn commit # Interactive Commitizen commit.
 yarn test # Run tests (with common coverage).
 yarn build # Create a JS build.
 yarn publish # Publish a package on npm.
