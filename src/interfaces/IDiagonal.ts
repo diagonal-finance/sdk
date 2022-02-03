@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 
-import ISubscription from "./isubscription";
+import ISubscription from "./ISubscription";
 
 export default interface IDiagonal {
     getSubscription(
