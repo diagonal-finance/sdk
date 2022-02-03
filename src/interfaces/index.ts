@@ -1,4 +1,4 @@
-import IDiagonal from "./idiagonal";
-import ISubscription from "./isubscription";
+import IDiagonal from "./IDiagonal";
+import ISubscription from "./ISubscription";
 
 export { IDiagonal, ISubscription };
