@@ -89,13 +89,13 @@
 
 ## 🛠 Installation
 
-### Via NPM:
+### ESMModule:
 
 ```bash
 yarn add @diagonal-finance/sdk
 ```
 
-### Raw Javascript bundle:
+### Script:
 
 ```html
 <script
@@ -104,9 +104,9 @@ yarn add @diagonal-finance/sdk
 ></script>
 ```
 
-### 📜 Usage
+## 📜 Usage
 
-#### ESModules:
+### ESModule:
 
 ```typescript
 import {
@@ -144,7 +144,7 @@ const subscriptionDetails: SubscriptionDetails =
 const isValid: boolean = await subscription.validate(packageId);
 ```
 
-#### Raw javascript
+### Script:
 
 ```html
 <script
