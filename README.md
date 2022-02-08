@@ -89,22 +89,24 @@
 
 ## 🛠 Installation
 
-### Via NPM:
+### ESMModule:
 
 ```bash
 yarn add @diagonal-finance/sdk
 ```
 
-### Raw Javascript bundle:
+### Script:
 
 ```html
 <script
-    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.0.2/dist/diagonal.bundle.js"
+    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.0.3/dist/diagonal.bundle.js"
     type="text/javascript"
 ></script>
 ```
 
-### 📜 Usage
+## 📜 Usage
+
+### ESModule:
 
 ```typescript
 import {
@@ -122,16 +124,61 @@ let tokenAddress = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
 let packageId = 2;
 
 const diagonal = new Diagonal(chainId, rpc);
-const subscription = new Subscription(
-    diagonal,
+const subscription = diagonal.getSubscription(
     userAddress,
     serviceAddress,
     tokenAddress
 );
 
+// Another method for instantiating a subscription:
+//
+// const subscription = new Subscription(
+//     diagonal,
+//     userAddress,
+//     serviceAddress,
+//     tokenAddress
+// );
+
 const subscriptionDetails: SubscriptionDetails =
     await subscription.getDetails();
 const isValid: boolean = await subscription.validate(packageId);
+```
+
+### Script:
+
+```html
+<script
+    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.0.3/dist/diagonal.bundle.js"
+    type="text/javascript"
+></script>
+
+<script type="text/javascript">
+    const { Diagonal, Subscription } = DiagonalSDK;
+
+    let chainId = 80001;
+    let rpc = "https://rpc-mumbai.maticvigil.com/";
+
+    let userAddress = "0x4Ea66bE6947D711Ed963fc4aa8c04c5a4da6959B";
+    let serviceAddress = "0x7eD9eAFBE6239404E93e3F60f4F4081E821f064e";
+    let tokenAddress = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
+    let packageId = 2;
+
+    const diagonal = new Diagonal(chainId, rpc);
+
+    const subscription = diagonal.getSubscription(
+        userAddress,
+        serviceAddress,
+        tokenAddress
+    );
+
+    subscription.getDetails().then((subscriptionDetails) => {
+        console.log(subscriptionDetails);
+    });
+
+    subscription.validate(packageId).then((isValid) => {
+        console.log(isValid);
+    });
+</script>
 ```
 
 ## 🛠 Development

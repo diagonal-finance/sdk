@@ -13,4 +13,6 @@ export {
     supportedChains,
     ChainId,
     SubscriptionDetails,
+    ISubscription,
+    IDiagonal,
 };
