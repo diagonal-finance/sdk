@@ -115,7 +115,7 @@ import {
     SubscriptionDetails,
 } from "@diagonal-finance/sdk";
 
-let chainId = 80001;
+let networkName = "mumbai";
 let rpc = "https://rpc-mumbai.maticvigil.com/";
 
 let userAddress = "0x4Ea66bE6947D711Ed963fc4aa8c04c5a4da6959B";
@@ -123,7 +123,7 @@ let serviceAddress = "0x7eD9eAFBE6239404E93e3F60f4F4081E821f064e";
 let tokenAddress = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
 let packageId = 2;
 
-const diagonal = new Diagonal(chainId, rpc);
+const diagonal = new Diagonal(chainId, rpc); // the rpc is optional, and without rpc, the approprate subgraph will be queried
 const subscription = diagonal.getSubscription(
     userAddress,
     serviceAddress,
@@ -155,7 +155,7 @@ const isValid: boolean = await subscription.validate(packageId);
 <script type="text/javascript">
     const { Diagonal, Subscription } = DiagonalSDK;
 
-    let chainId = 80001;
+    let networkName = "mumbai";
     let rpc = "https://rpc-mumbai.maticvigil.com/";
 
     let userAddress = "0x4Ea66bE6947D711Ed963fc4aa8c04c5a4da6959B";
@@ -163,7 +163,7 @@ const isValid: boolean = await subscription.validate(packageId);
     let tokenAddress = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
     let packageId = 2;
 
-    const diagonal = new Diagonal(chainId, rpc);
+    const diagonal = new Diagonal(chainId, rpc); // the rpc is optional, and without rpc, the approprate subgraph will be queried
 
     const subscription = diagonal.getSubscription(
         userAddress,

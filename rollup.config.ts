@@ -4,7 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-
+import nodePolyfills from "rollup-plugin-node-polyfills";
 
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 const banner = `/**
@@ -35,16 +35,21 @@ export default {
             sourcemap: true,
             globals: {
                 ethers: "ethers",
+                stream: "stream",
+                http: "http",
+                url: "url",
+                https: "https",
+                zlib: "zlib",
+                buffer: "buffer",
+                process: "process",
             },
         },
     ],
-    // external: Object.keys(pkg.dependencies),
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         json(),
         resolve(),
-        commonjs({
-            // "esmExternals": true
-        }),
+        commonjs(),
+        nodePolyfills(),
     ],
 };

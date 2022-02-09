@@ -5,8 +5,6 @@ import { chainIds, supportedChains } from "./utils/consts";
 import { ChainId, SubscriptionDetails } from "./utils/types";
 
 export {
-    IDiagonal,
-    ISubscription,
     Diagonal,
     Subscription,
     chainIds as networks,

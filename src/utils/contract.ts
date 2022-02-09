@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
-import DIAGONAL_SERVICE_ABI from "./artifacts//abi/v1/DiagonalServiceV1.json";
-import { DiagonalServiceV1 } from "./artifacts/typechain/DiagonalServiceV1";
+import DIAGONAL_SERVICE_ABI from "../artifacts/abi/v1/DiagonalServiceV1.json";
+import { DiagonalServiceV1 } from "../artifacts/typechain/DiagonalServiceV1";
 
 /**
  * Instantiate a DiagonalServiceV1 contract from the input params
