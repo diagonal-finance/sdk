@@ -1,14 +1,14 @@
-import { networks, supportedNetworks } from "./consts";
 import Diagonal from "./diagonal";
 import { IDiagonal, ISubscription } from "./interfaces";
 import Subscription from "./subscription";
-import { ChainId, SubscriptionDetails } from "./types";
+import { chainIds, supportedChains } from "./utils/consts";
+import { ChainId, SubscriptionDetails } from "./utils/types";
 
 export {
     Diagonal,
     Subscription,
-    networks,
-    supportedNetworks,
+    chainIds as networks,
+    supportedChains,
     ChainId,
     SubscriptionDetails,
     ISubscription,

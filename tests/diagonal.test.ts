@@ -1,5 +1,6 @@
+import { JsonRpcProvider } from "@ethersproject/providers";
+
 import { Diagonal } from "../src";
-import { networks, supportedNetworks } from "../src";
 
 import { testState } from "./utils";
 
@@ -7,28 +8,27 @@ import { testState } from "./utils";
 describe("Diagonal tests", () => {
     describe("Init tests", () => {
         it("Should be initialized correctly when correct parameters are passed", async () => {
-            const diagonal = new Diagonal(testState.network, testState.rpc);
+            const diagonal = new Diagonal("mumbai", testState.rpc);
             const provider = diagonal.provider;
+            const gqlClient = diagonal.graphQlClient;
 
             expect(provider).toBeDefined();
-            const network = await provider.getNetwork();
-            expect(network.chainId).toBe(testState.network);
+            expect(gqlClient).toBeDefined();
+            const network = await (provider as JsonRpcProvider).getNetwork();
+            expect(network.chainId).toBe(testState.chainId);
             expect(network.name).toBe(testState.networkName);
         });
 
         it("Should fail when network is unsupported", async () => {
-            const mainnet = networks.mainnet;
-            expect(supportedNetworks).not.toContain(mainnet);
-
             expect(() => {
-                new Diagonal(mainnet as number, "");
+                new Diagonal("mainnet");
             }).toThrowError("Network unsupported");
         });
     });
 
     describe("Subscriptions tests", () => {
-        it("Subscription should be created successfully", async () => {
-            const diagonal = new Diagonal(testState.network, testState.rpc);
+        it("Subscription entity should be created successfully", async () => {
+            const diagonal = new Diagonal(testState.networkSlug, testState.rpc);
 
             const subscription = diagonal.getSubscription(
                 testState.userAddress,

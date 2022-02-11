@@ -4,7 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-
+import { terser } from "rollup-plugin-terser";
 
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 const banner = `/**
@@ -27,24 +27,12 @@ export default {
             sourcemap: true,
         },
         { file: pkg.exports.import, format: "es", banner, sourcemap: true },
-        {
-            file: pkg.exports.browser,
-            format: "iife",
-            banner,
-            name: "DiagonalSDK",
-            sourcemap: true,
-            globals: {
-                ethers: "ethers",
-            },
-        },
     ],
-    // external: Object.keys(pkg.dependencies),
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         json(),
         resolve(),
-        commonjs({
-            // "esmExternals": true
-        }),
+        commonjs(),
+        terser(),
     ],
 };

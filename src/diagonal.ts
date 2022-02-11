@@ -1,8 +1,10 @@
-import { ethers } from "ethers";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { Client, createClient } from "@urql/core";
+import fetch from "cross-fetch";
 
-import { supportedNetworks } from "./consts";
 import { IDiagonal, ISubscription } from "./interfaces";
 import Subscription from "./subscription";
+import { chainIds, subgraphUrls, supportedChains } from "./utils/consts";
 
 /**
  * Diagonal is the main class of the SDK. It is the main
@@ -10,25 +12,43 @@ import Subscription from "./subscription";
  */
 export default class Diagonal implements IDiagonal {
     // The `JsonRpcProvider` provider
-    private _provider: ethers.providers.JsonRpcProvider;
+    private _provider: JsonRpcProvider | undefined;
+
+    // The GraphQL client
+    private _graphQlClient: Client;
 
     /**
      * Initialize a Diagonal object and create a `JsonRpcProvider` based on the
      * supplied arguments
-     * @param chainId The chainId of the wanted network to connect to
+     * @param network The network slug of the wanted network to connect to
      * @param rpc The RPC url of the wanted network to connect to
      */
-    constructor(chainId: number, rpc: string) {
-        if (!supportedNetworks.includes(chainId))
+    constructor(network: string, rpc?: string) {
+        const chainId = chainIds[network];
+        if (!chainId || !supportedChains.includes(chainId))
             throw new Error("Network unsupported");
-        this._provider = new ethers.providers.JsonRpcProvider(rpc, chainId);
+        if (rpc) {
+            this._provider = new JsonRpcProvider(rpc, chainId);
+        }
+
+        this._graphQlClient = createClient({
+            url: subgraphUrls[network] as string,
+            fetch: fetch,
+        });
     }
 
     /**
      * Get the `JsonRpcProvider` provider.
      */
-    public get provider(): ethers.providers.JsonRpcProvider {
+    public get provider(): JsonRpcProvider | undefined {
         return this._provider;
+    }
+
+    /**
+     * Get the GraphQL client
+     */
+    public get graphQlClient(): Client {
+        return this._graphQlClient;
     }
 
     /**

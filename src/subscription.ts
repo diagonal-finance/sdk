@@ -1,6 +1,12 @@
-import { DiagonalServiceV1 } from "./artifacts/typechain/DiagonalServiceV1";
+import { BigNumber } from "@ethersproject/bignumber";
+import { JsonRpcProvider } from "@ethersproject/providers";
+
 import { IDiagonal, ISubscription } from "./interfaces";
-import { getDiagonalServiceContract } from "./utils";
+import { getDiagonalServiceContract } from "./utils/contract";
+import {
+    getSubscriptionDetails as getSubscriptionDetailsSubgraph,
+    validateSubscription as validateSubscriptionSubgraph,
+} from "./utils/subgraph";
 
 import { SubscriptionDetails } from ".";
 
@@ -32,6 +38,9 @@ export default class Subscription implements ISubscription {
         serviceAddress: string,
         superTokenAddress: string
     ) {
+        if (!diagonal || !diagonal.graphQlClient) {
+            throw new Error("SDK not initialized.");
+        }
         this._diagonal = diagonal;
         this._userAddress = userAddress;
         this._serviceAddress = serviceAddress;
@@ -43,13 +52,26 @@ export default class Subscription implements ISubscription {
      * @returns A SubscriptionDetails object
      */
     public async getDetails(): Promise<SubscriptionDetails> {
-        if (!this._diagonal || !this._diagonal.provider) {
-            throw new Error("SDK not initialized.");
+        if (this._diagonal.provider) {
+            return this.getDetailsRPC();
+        } else {
+            return getSubscriptionDetailsSubgraph(
+                this._diagonal.graphQlClient,
+                this._userAddress,
+                this._superTokenAddress,
+                this._serviceAddress
+            );
         }
+    }
 
-        const serviceContract: DiagonalServiceV1 = getDiagonalServiceContract(
+    /**
+     * Get subscription details via RPC
+     * @returns A SubscriptionDetails object
+     */
+    private async getDetailsRPC(): Promise<SubscriptionDetails> {
+        const serviceContract = getDiagonalServiceContract(
             this._serviceAddress,
-            this._diagonal.provider
+            this._diagonal.provider as JsonRpcProvider
         );
 
         const subscriberState = await serviceContract.getSubscriberState(
@@ -62,7 +84,7 @@ export default class Subscription implements ISubscription {
             totalInputFeeRate: subscriberState.totalInputFeeRate,
             numSubscriptions: subscriberState.numSubscriptions.toNumber(),
             subscriberPackageIds: subscriberState.subscriberPackageIds.map(
-                (item) => item.toNumber()
+                (item: BigNumber) => item.toNumber()
             ),
             terminated: subscriberState.terminated,
         };
@@ -76,8 +98,26 @@ export default class Subscription implements ISubscription {
      * @returns Boolean representing whether the subscription to a package is valid or not
      */
     public async validate(packageId: number): Promise<boolean> {
-        const subscriptionDetails = await this.getDetails();
+        if (this._diagonal.provider) {
+            return this.validateFromRPC(packageId);
+        } else {
+            return validateSubscriptionSubgraph(
+                this._diagonal.graphQlClient,
+                this._userAddress,
+                this._superTokenAddress,
+                this._serviceAddress,
+                packageId
+            );
+        }
+    }
 
+    /**
+     * Validate the subscription using an RPC connection
+     * @param packageId The package id for which the check is performed
+     * @returns
+     */
+    private async validateFromRPC(packageId: number): Promise<boolean> {
+        const subscriptionDetails = await this.getDetails();
         if (
             subscriptionDetails.numSubscriptions > 0 &&
             !subscriptionDetails.terminated
