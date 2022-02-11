@@ -1,5 +1,5 @@
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client/core";
 import { BigNumber } from "@ethersproject/bignumber";
+import { Client } from "@urql/core";
 
 import { SubscriptionDetails } from "..";
 
@@ -26,7 +26,7 @@ export const getSubscriptionId = (
 };
 
 export const getSubscriptionDetails = async (
-    client: ApolloClient<NormalizedCacheObject>,
+    client: Client,
     subscriberAddress: string,
     superTokenAddress: string,
     serviceAddress: string
@@ -36,10 +36,11 @@ export const getSubscriptionDetails = async (
         superTokenAddress,
         serviceAddress
     );
-    const result = await client.query({
-        query: SUBSCRIPTION_DETAILS_QUERY,
-        variables: { id: subscriberStreamId.toLowerCase() },
-    });
+    const result = await client
+        .query(SUBSCRIPTION_DETAILS_QUERY, {
+            id: subscriberStreamId.toLowerCase(),
+        })
+        .toPromise();
 
     const subscriptionDetails: SubscriptionDetails = {
         totalInputFlowRate: BigNumber.from(0),
@@ -49,7 +50,7 @@ export const getSubscriptionDetails = async (
         terminated: false,
     };
 
-    if (result.data["subscriberServiceStream"] !== null) {
+    if (result.data && result.data["subscriberServiceStream"] !== null) {
         subscriptionDetails.totalInputFlowRate = BigNumber.from(
             result.data["subscriberServiceStream"]["totalStreamRate"]
         );
@@ -70,7 +71,7 @@ export const getSubscriptionDetails = async (
 };
 
 export const validateSubscription = async (
-    client: ApolloClient<NormalizedCacheObject>,
+    client: Client,
     subscriberAddress: string,
     superTokenAddress: string,
     serviceAddress: string,
@@ -82,13 +83,15 @@ export const validateSubscription = async (
         serviceAddress,
         packageId
     );
-    const result = await client.query({
-        query: SUBSCRIPTION_VALID_QUERY,
-        variables: { id: subscriberStreamId.toLowerCase() },
-    });
+    const result = await client
+        .query(SUBSCRIPTION_VALID_QUERY, {
+            id: subscriberStreamId.toLowerCase(),
+        })
+        .toPromise();
     let isValid = false;
 
     if (
+        result.data &&
         result.data["paymentSubscription"] !== null &&
         result.data["paymentSubscription"]["state"] === "ACTIVE"
     ) {

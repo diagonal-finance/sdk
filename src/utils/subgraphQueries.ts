@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@urql/core";
 
 export const SUBSCRIPTION_DETAILS_QUERY = gql`
     query SubscriptionDetails($id: ID!) {

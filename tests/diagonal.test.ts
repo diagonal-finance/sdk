@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 import { Diagonal } from "../src";
 
@@ -14,9 +14,7 @@ describe("Diagonal tests", () => {
 
             expect(provider).toBeDefined();
             expect(gqlClient).toBeDefined();
-            const network = await (
-                provider as ethers.providers.BaseProvider
-            ).getNetwork();
+            const network = await (provider as JsonRpcProvider).getNetwork();
             expect(network.chainId).toBe(testState.chainId);
             expect(network.name).toBe(testState.networkName);
         });

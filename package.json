@@ -1,6 +1,6 @@
 {
     "name": "@diagonal-finance/sdk",
-    "version": "1.0.3",
+    "version": "1.2.0",
     "description": "Diagonal finance SDK",
     "repository": "https://github.com/diagonal-finance/sdk",
     "homepage": "https://github.com/diagonal-finance/sdk",
@@ -8,20 +8,21 @@
         "name": "Diagonal Finance"
     },
     "license": "MIT",
-    "main": "dist/index.js",
+    "main": "dist/diagonal.min.js",
     "exports": {
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.js",
-        "browser": "./dist/diagonal.bundle.js"
+        "import": "./dist/diagonal.min.mjs",
+        "require": "./dist/diagonal.min.js",
+        "browser": "./dist/diagonal.bundle.min.js"
     },
-    "types": "dist/types/index.d.ts",
+    "types": "dist/types/src/index.d.ts",
     "files": [
         "dist/",
         "src/"
     ],
     "scripts": {
-        "build:watch": "rollup -c rollup.config.ts -w --configPlugin typescript",
-        "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin typescript",
+        "build:node": "rollup -c rollup.node.config.ts --configPlugin typescript",
+        "build:browser": "rollup -c rollup.browser.config.ts --configPlugin typescript",
+        "build": "rimraf dist && yarn build:node && yarn build:browser",
         "prepublishOnly": "yarn build && pinst --disable",
         "postpublish": "pinst --enable",
         "postinstall": "husky install",
@@ -46,9 +47,11 @@
         "access": "public"
     },
     "dependencies": {
-        "@apollo/client": "^3.5.8",
+        "@ethersproject/bignumber": "5.5.0",
+        "@ethersproject/contracts": "^5.5.0",
+        "@ethersproject/providers": "^5.5.3",
+        "@urql/core": "^2.4.1",
         "cross-fetch": "^3.1.5",
-        "ethers": "^5.5.4",
         "graphql": "^16.3.0"
     },
     "devDependencies": {
@@ -58,8 +61,10 @@
         "@commitlint/cli": "^16.1.0",
         "@commitlint/config-conventional": "^16.0.0",
         "@rollup/plugin-commonjs": "^21.0.1",
+        "@rollup/plugin-inject": "4.0.4",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.1.3",
+        "@rollup/plugin-replace": "^3.0.1",
         "@rollup/plugin-typescript": "^8.3.0",
         "@types/jest": "^27.4.0",
         "@types/mocha": "^9.1.0",
@@ -81,7 +86,7 @@
         "rimraf": "^3.0.2",
         "rollup": "^2.67.0",
         "rollup-plugin-cleanup": "^3.2.1",
-        "rollup-plugin-node-polyfills": "^0.2.1",
+        "rollup-plugin-terser": "^7.0.2",
         "ts-node": "^10.4.0",
         "tslib": "^2.3.1",
         "typedoc": "^0.22.11",

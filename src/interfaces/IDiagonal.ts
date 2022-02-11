@@ -1,5 +1,5 @@
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client/core";
-import { ethers } from "ethers";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { Client } from "@urql/core";
 
 import ISubscription from "./ISubscription";
 
@@ -10,7 +10,7 @@ export default interface IDiagonal {
         superTokenAddress: string
     ): ISubscription;
 
-    get provider(): ethers.providers.JsonRpcProvider | undefined;
+    get provider(): JsonRpcProvider | undefined;
 
-    get graphQlClient(): ApolloClient<NormalizedCacheObject>;
+    get graphQlClient(): Client;
 }

@@ -1,11 +1,6 @@
-import {
-    ApolloClient,
-    HttpLink,
-    InMemoryCache,
-    NormalizedCacheObject,
-} from "@apollo/client/core";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { Client, createClient } from "@urql/core";
 import fetch from "cross-fetch";
-import { ethers } from "ethers";
 
 import { IDiagonal, ISubscription } from "./interfaces";
 import Subscription from "./subscription";
@@ -17,10 +12,10 @@ import { chainIds, subgraphUrls, supportedChains } from "./utils/consts";
  */
 export default class Diagonal implements IDiagonal {
     // The `JsonRpcProvider` provider
-    private _provider: ethers.providers.JsonRpcProvider | undefined;
+    private _provider: JsonRpcProvider | undefined;
 
     // The GraphQL client
-    private _graphQlClient: ApolloClient<NormalizedCacheObject>;
+    private _graphQlClient: Client;
 
     /**
      * Initialize a Diagonal object and create a `JsonRpcProvider` based on the
@@ -33,26 +28,26 @@ export default class Diagonal implements IDiagonal {
         if (!chainId || !supportedChains.includes(chainId))
             throw new Error("Network unsupported");
         if (rpc) {
-            this._provider = new ethers.providers.JsonRpcProvider(rpc, chainId);
+            this._provider = new JsonRpcProvider(rpc, chainId);
         }
 
-        this._graphQlClient = new ApolloClient({
-            link: new HttpLink({ uri: subgraphUrls[network] as string, fetch }),
-            cache: new InMemoryCache(),
+        this._graphQlClient = createClient({
+            url: subgraphUrls[network] as string,
+            fetch: fetch,
         });
     }
 
     /**
      * Get the `JsonRpcProvider` provider.
      */
-    public get provider(): ethers.providers.JsonRpcProvider | undefined {
+    public get provider(): JsonRpcProvider | undefined {
         return this._provider;
     }
 
     /**
      * Get the GraphQL client
      */
-    public get graphQlClient(): ApolloClient<NormalizedCacheObject> {
+    public get graphQlClient(): Client {
         return this._graphQlClient;
     }
 

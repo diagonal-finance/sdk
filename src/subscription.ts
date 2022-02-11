@@ -1,6 +1,6 @@
-import { ethers } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
-import { DiagonalServiceV1 } from "./artifacts/typechain/DiagonalServiceV1";
 import { IDiagonal, ISubscription } from "./interfaces";
 import { getDiagonalServiceContract } from "./utils/contract";
 import {
@@ -69,9 +69,9 @@ export default class Subscription implements ISubscription {
      * @returns A SubscriptionDetails object
      */
     private async getDetailsRPC(): Promise<SubscriptionDetails> {
-        const serviceContract: DiagonalServiceV1 = getDiagonalServiceContract(
+        const serviceContract = getDiagonalServiceContract(
             this._serviceAddress,
-            this._diagonal.provider as ethers.providers.JsonRpcProvider
+            this._diagonal.provider as JsonRpcProvider
         );
 
         const subscriberState = await serviceContract.getSubscriberState(
@@ -84,7 +84,7 @@ export default class Subscription implements ISubscription {
             totalInputFeeRate: subscriberState.totalInputFeeRate,
             numSubscriptions: subscriberState.numSubscriptions.toNumber(),
             subscriberPackageIds: subscriberState.subscriberPackageIds.map(
-                (item) => item.toNumber()
+                (item: BigNumber) => item.toNumber()
             ),
             terminated: subscriberState.terminated,
         };

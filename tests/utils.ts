@@ -19,7 +19,7 @@ export const testState: TestState = {
     chainId: networks.mumbai as number,
     networkSlug: "mumbai",
     networkName: "maticmum",
-    rpc: "https://rpc-mumbai.maticvigil.com/",
+    rpc: "https://matic-mumbai.chainstacklabs.com",
     userAddress: "0x4Ea66bE6947D711Ed963fc4aa8c04c5a4da6959B",
     serviceAddress: "0x1DCA1Ef1b350Edf51bB8fF5Ef2f74daD2934671d",
     tokenAddress: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f",

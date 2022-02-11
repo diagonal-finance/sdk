@@ -99,7 +99,7 @@ yarn add @diagonal-finance/sdk
 
 ```html
 <script
-    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.0.3/dist/diagonal.bundle.js"
+    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.1.0/dist/diagonal.bundle.min.js"
     type="text/javascript"
 ></script>
 ```
@@ -148,7 +148,7 @@ const isValid: boolean = await subscription.validate(packageId);
 
 ```html
 <script
-    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.0.3/dist/diagonal.bundle.js"
+    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.2.0/dist/diagonal.bundle.min.js"
     type="text/javascript"
 ></script>
 
@@ -159,11 +159,11 @@ const isValid: boolean = await subscription.validate(packageId);
     let rpc = "https://rpc-mumbai.maticvigil.com/";
 
     let userAddress = "0x4Ea66bE6947D711Ed963fc4aa8c04c5a4da6959B";
-    let serviceAddress = "0x7eD9eAFBE6239404E93e3F60f4F4081E821f064e";
+    let serviceAddress = "0x1DCA1Ef1b350Edf51bB8fF5Ef2f74daD2934671d";
     let tokenAddress = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
-    let packageId = 2;
+    let packageId = 1;
 
-    const diagonal = new Diagonal(chainId, rpc); // the rpc is optional, and without rpc, the approprate subgraph will be queried
+    const diagonal = new Diagonal(networkName, rpc); // the rpc is optional, and without rpc, the approprate subgraph will be queried
 
     const subscription = diagonal.getSubscription(
         userAddress,
