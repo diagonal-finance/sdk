@@ -1,5 +1,5 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Client } from "@urql/core";
+import { providers } from "ethers";
+import { NetworkSlug } from "src/utils/types";
 
 import ISubscription from "./ISubscription";
 
@@ -10,7 +10,7 @@ export default interface IDiagonal {
         superTokenAddress: string
     ): ISubscription;
 
-    get provider(): JsonRpcProvider | undefined;
+    get provider(): providers.JsonRpcProvider | undefined;
 
-    get graphQlClient(): Client;
+    get network(): NetworkSlug;
 }

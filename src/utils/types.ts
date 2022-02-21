@@ -1,4 +1,4 @@
-import { BigNumber } from "@ethersproject/bignumber";
+import { BigNumber } from "ethers";
 
 /** ChainId type */
 export type ChainId = number;
@@ -11,3 +11,5 @@ export interface SubscriptionDetails {
     subscriberPackageIds: number[]; // The packageIds that the user is subscribed to, to the Service with the SuperToken
     terminated: boolean; // Wether the Subscription is terminated
 }
+
+export type NetworkSlug = "mumbai" | "matic" | "arbitrumRinkeby";

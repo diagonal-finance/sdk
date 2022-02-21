@@ -1,5 +1,5 @@
-import { Contract } from "@ethersproject/contracts";
-import { Provider } from "@ethersproject/providers";
+import { Contract } from "ethers";
+import { providers } from "ethers";
 
 import DIAGONAL_SERVICE_ABI from "../abis/DiagonalServiceV1.json";
 
@@ -11,7 +11,7 @@ import DIAGONAL_SERVICE_ABI from "../abis/DiagonalServiceV1.json";
  */
 export const getDiagonalServiceContract = (
     address: string,
-    provider: Provider
+    provider: providers.Provider
 ): Contract => {
     const serviceContract = new Contract(
         address,

@@ -1,5 +1,5 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { JsonRpcProvider } from "@ethersproject/providers";
+import { BigNumber } from "ethers";
 
 import { IDiagonal, ISubscription } from "./interfaces";
 import { getDiagonalServiceContract } from "./utils/contract";
@@ -38,7 +38,7 @@ export default class Subscription implements ISubscription {
         serviceAddress: string,
         superTokenAddress: string
     ) {
-        if (!diagonal || !diagonal.graphQlClient) {
+        if (!diagonal || !diagonal.network) {
             throw new Error("SDK not initialized.");
         }
         this._diagonal = diagonal;
@@ -56,7 +56,7 @@ export default class Subscription implements ISubscription {
             return this.getDetailsRPC();
         } else {
             return getSubscriptionDetailsSubgraph(
-                this._diagonal.graphQlClient,
+                this._diagonal.network,
                 this._userAddress,
                 this._superTokenAddress,
                 this._serviceAddress
@@ -102,7 +102,7 @@ export default class Subscription implements ISubscription {
             return this.validateFromRPC(packageId);
         } else {
             return validateSubscriptionSubgraph(
-                this._diagonal.graphQlClient,
+                this._diagonal.network,
                 this._userAddress,
                 this._superTokenAddress,
                 this._serviceAddress,

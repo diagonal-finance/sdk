@@ -1,11 +1,12 @@
 import { BigNumber } from "@ethersproject/bignumber";
 
 import { networks, SubscriptionDetails } from "../src";
+import { NetworkSlug } from "../src/utils/types";
 
 export interface TestState {
     chainId: number;
     networkName: string;
-    networkSlug: string;
+    networkSlug: NetworkSlug;
     rpc: string;
     userAddress: string;
     serviceAddress: string;

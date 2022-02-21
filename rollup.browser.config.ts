@@ -27,14 +27,11 @@ export default {
             name: "DiagonalSDK",
             sourcemap: true,
             globals: {
-                stream: "stream",
-                http: "http",
-                url: "url",
-                https: "https",
-                zlib: "zlib",
+                ethers: "ethers",
             },
         },
     ],
+    external: ["ethers"],
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         json(),
