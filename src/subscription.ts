@@ -1,8 +1,8 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { BigNumber } from "ethers";
-
 import { IDiagonal, ISubscription } from "./interfaces";
-import { getDiagonalServiceContract } from "./utils/contract";
+import {
+    getSubscriptionDetails as getSubscriptionDetailsRPC,
+    validateSubscription as validateSubscriptionRPC,
+} from "./utils/rpc";
 import {
     getSubscriptionDetails as getSubscriptionDetailsSubgraph,
     validateSubscription as validateSubscriptionSubgraph,
@@ -52,8 +52,13 @@ export default class Subscription implements ISubscription {
      * @returns A SubscriptionDetails object
      */
     public async getDetails(): Promise<SubscriptionDetails> {
-        if (this._diagonal.provider) {
-            return this.getDetailsRPC();
+        if (this._diagonal.rpcUrl) {
+            return getSubscriptionDetailsRPC(
+                this.diagonal.rpcUrl as string,
+                this._userAddress,
+                this._superTokenAddress,
+                this._serviceAddress
+            );
         } else {
             return getSubscriptionDetailsSubgraph(
                 this._diagonal.network,
@@ -65,41 +70,19 @@ export default class Subscription implements ISubscription {
     }
 
     /**
-     * Get subscription details via RPC
-     * @returns A SubscriptionDetails object
-     */
-    private async getDetailsRPC(): Promise<SubscriptionDetails> {
-        const serviceContract = getDiagonalServiceContract(
-            this._serviceAddress,
-            this._diagonal.provider as JsonRpcProvider
-        );
-
-        const subscriberState = await serviceContract.getSubscriberState(
-            this._userAddress,
-            this._superTokenAddress
-        );
-
-        const subscriptionDetails: SubscriptionDetails = {
-            totalInputFlowRate: subscriberState.totalInputFlowRate,
-            totalInputFeeRate: subscriberState.totalInputFeeRate,
-            numSubscriptions: subscriberState.numSubscriptions.toNumber(),
-            subscriberPackageIds: subscriberState.subscriberPackageIds.map(
-                (item: BigNumber) => item.toNumber()
-            ),
-            terminated: subscriberState.terminated,
-        };
-
-        return subscriptionDetails;
-    }
-
-    /**
      * Validate that a subscription to a package exists.
      * @param packageId The package id for which the check is performed
      * @returns Boolean representing whether the subscription to a package is valid or not
      */
     public async validate(packageId: number): Promise<boolean> {
-        if (this._diagonal.provider) {
-            return this.validateFromRPC(packageId);
+        if (this._diagonal.rpcUrl) {
+            return validateSubscriptionRPC(
+                this.diagonal.rpcUrl as string,
+                this._userAddress,
+                this._superTokenAddress,
+                this._serviceAddress,
+                packageId
+            );
         } else {
             return validateSubscriptionSubgraph(
                 this._diagonal.network,
@@ -109,23 +92,6 @@ export default class Subscription implements ISubscription {
                 packageId
             );
         }
-    }
-
-    /**
-     * Validate the subscription using an RPC connection
-     * @param packageId The package id for which the check is performed
-     * @returns
-     */
-    private async validateFromRPC(packageId: number): Promise<boolean> {
-        const subscriptionDetails = await this.getDetails();
-        if (
-            subscriptionDetails.numSubscriptions > 0 &&
-            !subscriptionDetails.terminated
-        ) {
-            return subscriptionDetails.subscriberPackageIds.includes(packageId);
-        }
-
-        return false;
     }
 
     /**

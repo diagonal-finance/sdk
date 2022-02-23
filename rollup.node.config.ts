@@ -28,7 +28,6 @@ export default {
         },
         { file: pkg.exports.import, format: "es", banner, sourcemap: true },
     ],
-    external: ["ethers"],
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         json(),

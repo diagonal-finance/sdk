@@ -1,5 +1,4 @@
 import fetch from "cross-fetch";
-import { BigNumber } from "ethers";
 
 import { SubscriptionDetails } from "..";
 
@@ -56,20 +55,19 @@ export const getSubscriptionDetails = async (
     const result = await response.json();
 
     const subscriptionDetails: SubscriptionDetails = {
-        totalInputFlowRate: BigNumber.from(0),
-        totalInputFeeRate: BigNumber.from(0),
+        totalInputFlowRate: "0",
+        totalInputFeeRate: "0",
         numSubscriptions: 0,
         subscriberPackageIds: [],
         terminated: false,
     };
 
     if (result.data && result.data["subscriberServiceStream"] !== null) {
-        subscriptionDetails.totalInputFlowRate = BigNumber.from(
-            result.data["subscriberServiceStream"]["totalStreamRate"]
-        );
-        subscriptionDetails.totalInputFeeRate = BigNumber.from(
-            result.data["subscriberServiceStream"]["feeRate"]
-        );
+        subscriptionDetails.totalInputFlowRate =
+            result.data["subscriberServiceStream"]["totalStreamRate"];
+
+        subscriptionDetails.totalInputFeeRate =
+            result.data["subscriberServiceStream"]["feeRate"];
         subscriptionDetails.numSubscriptions =
             result.data["subscriberServiceStream"]["packageIds"].length;
         subscriptionDetails.subscriberPackageIds = result.data[

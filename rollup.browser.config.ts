@@ -26,12 +26,8 @@ export default {
             banner,
             name: "DiagonalSDK",
             sourcemap: true,
-            globals: {
-                ethers: "ethers",
-            },
         },
     ],
-    external: ["ethers"],
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         json(),

@@ -1,4 +1,3 @@
-import { providers } from "ethers";
 import { NetworkSlug } from "src/utils/types";
 
 import ISubscription from "./ISubscription";
@@ -10,7 +9,7 @@ export default interface IDiagonal {
         superTokenAddress: string
     ): ISubscription;
 
-    get provider(): providers.JsonRpcProvider | undefined;
+    get rpcUrl(): string | undefined;
 
     get network(): NetworkSlug;
 }
