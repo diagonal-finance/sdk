@@ -1,54 +1,48 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Client, createClient } from "@urql/core";
-import fetch from "cross-fetch";
-
 import { IDiagonal, ISubscription } from "./interfaces";
 import Subscription from "./subscription";
-import { chainIds, subgraphUrls, supportedChains } from "./utils/consts";
+import { chainIds, supportedChains } from "./utils/consts";
+import { NetworkSlug } from "./utils/types";
 
 /**
  * Diagonal is the main class of the SDK. It is the main
  * entry point, and a class that should be used to initialize the SDK.
  */
 export default class Diagonal implements IDiagonal {
-    // The `JsonRpcProvider` provider
-    private _provider: JsonRpcProvider | undefined;
+    // RPC provider url
+    private _rpcUrl: string | undefined;
 
-    // The GraphQL client
-    private _graphQlClient: Client;
+    // The network slug
+    private _network: NetworkSlug;
 
     /**
      * Initialize a Diagonal object and create a `JsonRpcProvider` based on the
      * supplied arguments
      * @param network The network slug of the wanted network to connect to
-     * @param rpc The RPC url of the wanted network to connect to
+     * @param rpcUrl The RPC url of the desired network to connect to
      */
-    constructor(network: string, rpc?: string) {
+    constructor(network: NetworkSlug, rpcUrl?: string) {
         const chainId = chainIds[network];
         if (!chainId || !supportedChains.includes(chainId))
             throw new Error("Network unsupported");
-        if (rpc) {
-            this._provider = new JsonRpcProvider(rpc, chainId);
+        if (rpcUrl) {
+            this._rpcUrl = rpcUrl;
         }
 
-        this._graphQlClient = createClient({
-            url: subgraphUrls[network] as string,
-            fetch: fetch,
-        });
+        this._network = network;
     }
 
     /**
-     * Get the `JsonRpcProvider` provider.
+     * Get the RPC url
      */
-    public get provider(): JsonRpcProvider | undefined {
-        return this._provider;
+    public get rpcUrl(): string | undefined {
+        return this._rpcUrl;
     }
 
     /**
-     * Get the GraphQL client
+     * Get the network slug
      */
-    public get graphQlClient(): Client {
-        return this._graphQlClient;
+    public get network(): NetworkSlug {
+        return this._network;
     }
 
     /**

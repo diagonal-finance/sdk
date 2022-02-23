@@ -1,6 +1,4 @@
-import { gql } from "@urql/core";
-
-export const SUBSCRIPTION_DETAILS_QUERY = gql`
+export const SUBSCRIPTION_DETAILS_QUERY = `
     query SubscriptionDetails($id: ID!) {
         subscriberServiceStream(id: $id) {
             id
@@ -21,7 +19,7 @@ export const SUBSCRIPTION_DETAILS_QUERY = gql`
     }
 `;
 
-export const SUBSCRIPTION_VALID_QUERY = gql`
+export const SUBSCRIPTION_VALID_QUERY = `
     query SubscriptionDetails($id: ID!) {
         paymentSubscription(id: $id) {
             id

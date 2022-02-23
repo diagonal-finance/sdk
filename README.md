@@ -99,7 +99,7 @@ yarn add @diagonal-finance/sdk
 
 ```html
 <script
-    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.1.0/dist/diagonal.bundle.min.js"
+    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.4.0/dist/diagonal.bundle.min.js"
     type="text/javascript"
 ></script>
 ```
@@ -148,7 +148,7 @@ const isValid: boolean = await subscription.validate(packageId);
 
 ```html
 <script
-    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.2.0/dist/diagonal.bundle.min.js"
+    src="https://cdn.jsdelivr.net/npm/@diagonal-finance/sdk@1.4.0/dist/diagonal.bundle.min.js"
     type="text/javascript"
 ></script>
 

@@ -1,12 +1,13 @@
-import { BigNumber } from "@ethersproject/bignumber";
-import { Client } from "@urql/core";
+import fetch from "cross-fetch";
 
 import { SubscriptionDetails } from "..";
 
+import { subgraphUrls } from "./consts";
 import {
     SUBSCRIPTION_DETAILS_QUERY,
     SUBSCRIPTION_VALID_QUERY,
 } from "./subgraphQueries";
+import { NetworkSlug } from "./types";
 
 export const getSubscriberStreamId = (
     subscriberAddress: string,
@@ -26,7 +27,7 @@ export const getSubscriptionId = (
 };
 
 export const getSubscriptionDetails = async (
-    client: Client,
+    network: NetworkSlug,
     subscriberAddress: string,
     superTokenAddress: string,
     serviceAddress: string
@@ -36,27 +37,37 @@ export const getSubscriptionDetails = async (
         superTokenAddress,
         serviceAddress
     );
-    const result = await client
-        .query(SUBSCRIPTION_DETAILS_QUERY, {
-            id: subscriberStreamId.toLowerCase(),
-        })
-        .toPromise();
+
+    const subgraphUrl = subgraphUrls[network] as string;
+
+    const response = await fetch(subgraphUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: JSON.stringify({
+            query: SUBSCRIPTION_DETAILS_QUERY,
+            variables: { id: subscriberStreamId },
+        }),
+    });
+
+    const result = await response.json();
 
     const subscriptionDetails: SubscriptionDetails = {
-        totalInputFlowRate: BigNumber.from(0),
-        totalInputFeeRate: BigNumber.from(0),
+        totalInputFlowRate: "0",
+        totalInputFeeRate: "0",
         numSubscriptions: 0,
         subscriberPackageIds: [],
         terminated: false,
     };
 
     if (result.data && result.data["subscriberServiceStream"] !== null) {
-        subscriptionDetails.totalInputFlowRate = BigNumber.from(
-            result.data["subscriberServiceStream"]["totalStreamRate"]
-        );
-        subscriptionDetails.totalInputFeeRate = BigNumber.from(
-            result.data["subscriberServiceStream"]["feeRate"]
-        );
+        subscriptionDetails.totalInputFlowRate =
+            result.data["subscriberServiceStream"]["totalStreamRate"];
+
+        subscriptionDetails.totalInputFeeRate =
+            result.data["subscriberServiceStream"]["feeRate"];
         subscriptionDetails.numSubscriptions =
             result.data["subscriberServiceStream"]["packageIds"].length;
         subscriptionDetails.subscriberPackageIds = result.data[
@@ -71,23 +82,32 @@ export const getSubscriptionDetails = async (
 };
 
 export const validateSubscription = async (
-    client: Client,
+    network: NetworkSlug,
     subscriberAddress: string,
     superTokenAddress: string,
     serviceAddress: string,
     packageId: number
 ): Promise<boolean> => {
-    const subscriberStreamId = getSubscriptionId(
+    const subscriptionId = getSubscriptionId(
         subscriberAddress,
         superTokenAddress,
         serviceAddress,
         packageId
     );
-    const result = await client
-        .query(SUBSCRIPTION_VALID_QUERY, {
-            id: subscriberStreamId.toLowerCase(),
-        })
-        .toPromise();
+    const subgraphUrl = subgraphUrls[network] as string;
+    const response = await fetch(subgraphUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: JSON.stringify({
+            query: SUBSCRIPTION_VALID_QUERY,
+            variables: { id: subscriptionId },
+        }),
+    });
+
+    const result = await response.json();
     let isValid = false;
 
     if (

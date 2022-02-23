@@ -113,6 +113,28 @@ describe("Subscription tests", () => {
             expect(subscriptionDetailsResult.terminated).toEqual(false);
         });
 
+        it("subscriptionDetails should return correct results when subscription is terminated", async () => {
+            const diagonal = new Diagonal(testState.networkSlug, testState.rpc);
+
+            const subscription = diagonal.getSubscription(
+                testState.userAddress,
+                testState.serviceAddressTerminated,
+                testState.tokenAddressTerminated
+            );
+
+            const subscriptionDetailsResult = await subscription.getDetails();
+
+            expect(subscriptionDetailsResult.numSubscriptions).toEqual(0);
+            expect(
+                subscriptionDetailsResult.totalInputFeeRate.toString()
+            ).toEqual("0");
+            expect(
+                subscriptionDetailsResult.totalInputFlowRate.toString()
+            ).toEqual("0");
+            expect(subscriptionDetailsResult.subscriberPackageIds).toEqual([]);
+            expect(subscriptionDetailsResult.terminated).toEqual(true);
+        });
+
         it("valide should return correct results when subscription exists", async () => {
             const diagonal = new Diagonal(testState.networkSlug, testState.rpc);
 

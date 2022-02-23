@@ -26,13 +26,6 @@ export default {
             banner,
             name: "DiagonalSDK",
             sourcemap: true,
-            globals: {
-                stream: "stream",
-                http: "http",
-                url: "url",
-                https: "https",
-                zlib: "zlib",
-            },
         },
     ],
     plugins: [
